@@ -2,4 +2,5 @@
 int main ()
 {
   printf ("\nBem Vindo\n");
+  printf("teste");
 }
