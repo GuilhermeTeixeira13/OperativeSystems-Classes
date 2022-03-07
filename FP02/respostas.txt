@@ -1,0 +1,32 @@
+1.
+  a) Operador de redirecionamento da entrada
+     Cria arquivos
+     Adiciona no final do arquivo
+     Operador de redirecionamento de mensagem de erro
+  c) 3 - O seu nome próprio, a opção -t e o file /etc/passwd
+     2 - O seu nome próprio e o file /etc/passwd
+     2 - O seu nome próprio e a opção -t
+
+2.
+  a) 
+#!/bin/bash
+
+echo Escreva 5 números para serem ordenados - 
+read n1 n2 n3 n4 n5
+
+printf "$n1\n$n2\n$n3\n$n4\n$n5" > numerosLidos.txt
+
+echo Números ordenados - 
+
+sort -n numerosLidos.txt
+
+  b)
+#!/bin/bash
+
+echo Ordenado por ID >> res.txt
+sort -n frutas.txt >> res.txt
+printf "\nOrdenado alfabeticamente\n" >> res.txt
+sort -n -t : -k 2 frutas.txt >> res.txt
+printf "\nOrdenado por quantidade\n" >> res.txt
+sort -n -t : -k 3 frutas.txt >> res.txt
+
