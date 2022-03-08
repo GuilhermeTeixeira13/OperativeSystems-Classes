@@ -114,7 +114,6 @@ void mostraNumLinha ( FILE * entrada, FILE * saida ){
      else{
         fprintf(saida, "\n%-10d", linha);
         fsetpos(entrada, &position);
-        //fputc(ch, saida);
      }
      linha++;
    }
