@@ -14,6 +14,7 @@ int main( int argc, char *argv[] ){
     streamCopy (stdin, stdout); 
   else {
     FILE *fptr1;
+
     int start=1;
     if(argv[1][0] == '-'){
       start = 2; 
