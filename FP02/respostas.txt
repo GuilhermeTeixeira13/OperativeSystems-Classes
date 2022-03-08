@@ -34,3 +34,9 @@ sort -n -t : -k 3 frutas.txt >> res.txt
  a) grep /bin/bash /etc/passwd
 
 
+PROGRAMAÇÃO EM C
+
+a) Para o teste 3 funcionar teremos de realizar o exercício seguinte (completar o else)
+
+
+
