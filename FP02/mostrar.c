@@ -63,6 +63,7 @@ void mostraNumLinha ( FILE * entrada, FILE * saida ){
  int ch; 
  int linha=1;
  fpos_t position;
+ printf("%-10d", 0);
  while ((ch=fgetc(entrada)) != EOF ){
    if(ch == 10){
      fgetpos(entrada, &position);
@@ -70,10 +71,9 @@ void mostraNumLinha ( FILE * entrada, FILE * saida ){
        fprintf(saida, "\n");
      }
      else{
-        printf("entrou");
+        fprintf(saida, "\n%-10d", linha);
         fsetpos(entrada, &position);
-        fputc(ch, saida);
-        fprintf(saida, "%-10d", linha);
+        //fputc(ch, saida);
      }
      linha++;
    }
