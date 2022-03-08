@@ -5,6 +5,7 @@
 
 void streamCopy ( FILE * entrada, FILE * saida);
 void alteraCharControlo ( FILE * entrada, FILE * saida );
+void mostraNumLinha ( FILE * entrada, FILE * saida );
 
 
 int main( int argc, char *argv[] ){
@@ -14,9 +15,10 @@ int main( int argc, char *argv[] ){
   else {
     FILE *fptr1;
     int start=1;
-    if(strcmp(argv[1], "-T") == 0){
+    if(argv[1][0] == '-'){
       start = 2; 
     }
+
     for(int i=start; i< argc; i++){
       fptr1 = fopen(argv[i], "r");
       if (fptr1 == NULL){
@@ -24,8 +26,12 @@ int main( int argc, char *argv[] ){
         exit(0);
       }
 
-      if(start==2)
-        alteraCharControlo(fptr1, stdout);
+      if(start==2){
+        if(strcmp(argv[1], "-T") == 0)
+          alteraCharControlo(fptr1, stdout);
+        else if(strcmp(argv[1], "-n") == 0)
+          mostraNumLinha(fptr1, stdout);
+      }
       else
         streamCopy(fptr1, stdout);
       fclose(fptr1);
@@ -49,6 +55,29 @@ void alteraCharControlo ( FILE * entrada, FILE * saida ){
   if( ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z')) || (ch >= '0' && ch <= '9'))
     fputc(ch, saida);
   else
-    fputc("^I", saida);
+    fputs("^I", saida);
+  }
+}
+
+void mostraNumLinha ( FILE * entrada, FILE * saida ){
+ int ch; 
+ int linha=1;
+ fpos_t position;
+ while ((ch=fgetc(entrada)) != EOF ){
+   if(ch == 10){
+     fgetpos(entrada, &position);
+     if((fgetc(entrada)) == EOF ){
+       fprintf(saida, "\n");
+     }
+     else{
+        printf("entrou");
+        fsetpos(entrada, &position);
+        fputc(ch, saida);
+        fprintf(saida, "%-10d", linha);
+     }
+     linha++;
+   }
+   else
+    fputc( ch, saida);
  }
 }
