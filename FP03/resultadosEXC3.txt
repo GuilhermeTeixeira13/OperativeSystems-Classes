@@ -1,5 +1,12 @@
-Ficheiro usado: solowlevelcp.c
-Tamanho do ficheiro: 1132 Bytes (ls -l solowlevelcp.c)
+Ficheiro usado: 100MB.bin
+Tamanho do ficheiro: 100MB
 
+Tamanho do Bloco | Tempo CPU Low-Level | Tempo CPU high-Level
+4096             |      0.332408s      |      1.190259s
+1024             |      0.593932s      |      1.178103s
+256              |      1.589275s      |      1.214628s
+64               |      4.453771s      |      1.216667s
+16               |     19.437029s      |      1.207810s
+4                |     71.276459s      |      1.136427s
 
 
