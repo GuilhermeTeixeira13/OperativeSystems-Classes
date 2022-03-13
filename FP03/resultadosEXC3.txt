@@ -1,0 +1,5 @@
+Ficheiro usado: solowlevelcp.c
+Tamanho do ficheiro: 1132 Bytes (ls -l solowlevelcp.c)
+
+
+
