@@ -6,7 +6,7 @@
 # define the compiler as a variable
 CC = cc -Wall
 
-all : main mainstd test1
+all : libsoio.so main mainstd test1 
 
 soio.o: soio.c soio.h
 	$(CC) -c soio.c -o soio.o
@@ -20,20 +20,20 @@ mainstd.o: mainstd.c
 test1.o: test1.c soio.h
 	$(CC) -c test1.c
 
-main: main.o soio.o soio.h
-	$(CC) -o main main.o soio.o
-
-test1: test1.o soio.o soio.h
-	$(CC) -o test1 test1.o soio.o
-
-mainstd: mainstd.o 
-	$(CC) -o mainstd mainstd.o 
-
 soio.o: soio.c soio.h
 	$(CC) -fpic -c soio.c
 
 libsoio.so: soio.o
 	$(CC) -shared -fPIC -o libsoio.so soio.o
+
+main: main.o soio.o soio.h
+	$(CC) -o main main.o soio.o libsoio.so
+
+test1: test1.o soio.o soio.h
+	$(CC) -o test1 test1.o soio.o libsoio.so
+
+mainstd: mainstd.o 
+	$(CC) -o mainstd mainstd.o libsoio.so
 
 #para remover todos os ficheiros executaveis e temporarios : type
 #make clean
