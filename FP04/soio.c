@@ -14,6 +14,10 @@ SOFILE *sofopen (const char *nome, const char *mode)
 
   if (mode[0] == 'r')
     fd = open (nome, O_RDONLY, 0);
+  else if(mode[0] == 'w')
+    fd = open (nome, O_RDWR, 0);
+  else if(mode[0] == 'a')
+    fd = open (nome, O_APPEND, 0);
   else
     exit (1);			//agora apenas para leitura !
 
@@ -48,29 +52,40 @@ int sofgetc (SOFILE * fp)
   char letra;
 
   fp->size = read(fp->fd, &letra, sizeof(char));
+
   if (fp->size == -1) {
     return -1;
   }
-  else if(fp->size == fp->index || fp->size == 0){
+  else if(fp->size == 0){
     return EOF;
   }
   else{
     fp->buf[fp->index] = letra;
     fp->index++;
-    if(fp->size == fp->index || fp->size == 0){
-      fp->index = 0;
-      fp->size = 0;
-    }
+    
     return letra;
   }
-
-  return letra;
 }
 
 int sofflush (SOFILE * fp)
 {
-  write(1, fp->buf, fp->size);
+  if (fp == NULL)
+  {
+    return -1;
+  }
+  fp->index = 0;
+  fp->size = 0;
 
+  return 0;
+}
+
+
+int sofputc(SOFILE * fp, int c){
+  fp->buf[fp->index++] = c; 
+  if(fp->index == fp->size){
+    if(fp->modo == 'w')
+      write(fp->fd, fp->buf, sizeof(int));
+  }
   return 0;
 }
 

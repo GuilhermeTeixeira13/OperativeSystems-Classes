@@ -19,11 +19,18 @@
 #define MAXBUFFSIZE	16 
 #define EOF    		(-1)
 
-typedef struct {  int fd;  char *buf; int index; int  size; } SOFILE;
+typedef struct {
+  int fd;  
+  char *buf; 
+  int index; 
+  int  size; 
+  char modo;
+} SOFILE;
 
 SOFILE * sofopen( const char *nome, const char * mode);
 int sofclose (SOFILE * fp);
 int sofgetc  (SOFILE * fp);
 int sofflush (SOFILE * fp);
+int sofputc(SOFILE * fp, int c);
 
 #endif /* _SOSTDIO_H_ */
