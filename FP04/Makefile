@@ -6,14 +6,17 @@
 # define the compiler as a variable
 CC = cc -Wall
 
-all : libsoio.so main mainstd test1 
+all : libsoio.so main mainstd test1  fputcTeste
 
 soio.o: soio.c soio.h
 	$(CC) -c soio.c -o soio.o
 
 main.o: main.c soio.h
 	$(CC) -c main.c
-	
+
+fputcTeste.o: fputcTeste.c soio.h
+	$(CC) -c fputcTeste.c
+
 mainstd.o: mainstd.c
 	$(CC) -c mainstd.c
 
@@ -29,6 +32,9 @@ libsoio.so: soio.o
 main: main.o soio.o soio.h
 	$(CC) -o main main.o soio.o libsoio.so
 
+fputcTeste: fputcTeste.o soio.o soio.h
+	$(CC) -o fputcTeste fputcTeste.o soio.o libsoio.so
+
 test1: test1.o soio.o soio.h
 	$(CC) -o test1 test1.o soio.o libsoio.so
 
@@ -39,5 +45,5 @@ mainstd: mainstd.o
 #make clean
 
 clean :
-	rm -f *.o *~ main test1 mainstd
+	rm -f *.o *~ main test1 mainstd fputcTeste
 

@@ -25,8 +25,8 @@ SOFILE *sofopen (const char *nome, const int mode)
   if (-1 == fd)
     return NULL;		//caso erro
 
-  char fdc ='0'+fd;  //ok if fd<=9
-  write(2,"FD ",3); write(2,&fdc,1);  write(2,"\n",1);
+  //char fdc ='0'+fd;  //ok if fd<=9
+  //write(2,"FD ",3); write(2,&fdc,1);  write(2,"\n",1);
 
   novo = (SOFILE *) malloc (sizeof (SOFILE));
   novo->buf = (char *) malloc (MAXBUFFSIZE);
@@ -83,15 +83,12 @@ int sofflush (SOFILE * fp)
 
 
 int sofputc(SOFILE * fp, int c){
-  //printf("index:%d|size:%d", fp->index, fp->size);
   fp->buf[fp->index++] = c; 
   fp->size++;
   if(fp->index == fp->size){
-    //printf("modo=%c", fp->modo);
     if(fp->modo == 'w'){
-      //printf("entrou");
-      printf("index:%d|size:%d", fp->index, fp->size);
       write(fp->fd, fp->buf, fp->size);
+      sofflush(fp);
     }
   }
   return 0;
