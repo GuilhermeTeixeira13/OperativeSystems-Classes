@@ -6,17 +6,18 @@
  *
  */
 #include "soio.h"
+#include<stdio.h>
 
-SOFILE *sofopen (const char *nome, const char *mode)
+SOFILE *sofopen (const char *nome, const int mode)
 {
   SOFILE *novo = NULL;
   int fd;
 
-  if (mode[0] == 'r')
+  if (mode == 'r')
     fd = open (nome, O_RDONLY, 0);
-  else if(mode[0] == 'w')
+  else if(mode == 'w')
     fd = open (nome, O_RDWR, 0);
-  else if(mode[0] == 'a')
+  else if(mode == 'a')
     fd = open (nome, O_APPEND, 0);
   else
     exit (1);			//agora apenas para leitura !
@@ -32,6 +33,7 @@ SOFILE *sofopen (const char *nome, const char *mode)
   novo->fd = fd;
   novo->index = 0;
   novo->size = 0;
+  novo->modo = mode;
   return novo;
 }
 
@@ -81,10 +83,16 @@ int sofflush (SOFILE * fp)
 
 
 int sofputc(SOFILE * fp, int c){
+  //printf("index:%d|size:%d", fp->index, fp->size);
   fp->buf[fp->index++] = c; 
+  fp->size++;
   if(fp->index == fp->size){
-    if(fp->modo == 'w')
-      write(fp->fd, fp->buf, sizeof(int));
+    //printf("modo=%c", fp->modo);
+    if(fp->modo == 'w'){
+      //printf("entrou");
+      printf("index:%d|size:%d", fp->index, fp->size);
+      write(fp->fd, fp->buf, fp->size);
+    }
   }
   return 0;
 }

@@ -24,10 +24,10 @@ typedef struct {
   char *buf; 
   int index; 
   int  size; 
-  char modo;
+  int modo;
 } SOFILE;
 
-SOFILE * sofopen( const char *nome, const char * mode);
+SOFILE *sofopen (const char *nome, const int mode);
 int sofclose (SOFILE * fp);
 int sofgetc  (SOFILE * fp);
 int sofflush (SOFILE * fp);

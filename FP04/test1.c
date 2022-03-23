@@ -11,7 +11,7 @@ int main()
     write(2, "Test1 Test Program\n", 19);
 
     //TEST
-    fp = sofopen("NonFile", "r");
+    fp = sofopen("NonFile", 'r');
     if (fp == NULL)
         write(2, "File Cant be Opened\n", 20);
     else
@@ -21,7 +21,7 @@ int main()
     sofclose(fp);
 
     //TEST
-    fp = sofopen("test.txt", "r");
+    fp = sofopen("test.txt", 'r');
     if (fp != NULL)
     {
         write(2, "File Opened OK\n", 15);
@@ -31,7 +31,7 @@ int main()
         return 1;
 
     //TEST
-    fp = sofopen("main.c", "r");
+    fp = sofopen("main.c", 'r');
 
     if (NULL != fp)
     {
