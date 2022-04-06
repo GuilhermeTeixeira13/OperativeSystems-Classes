@@ -16,9 +16,21 @@ int ultimo(int *numargs, char **args)
   return FG; /*return FG ou BG definidos no shell.h */
 }
 
+/* Detect PIPE SYMBOL in array of Strings return its index or -1 if it does not exist */
+int containsPipe(int numArgs, char **args)
+{
+  int index;
+  for (index = 0; index < numArgs; index++)
+    if (args[index][0] == '|')
+    {
+      return index;
+    }
+  return -1;
+}
+
 void execute(int numargs, char **args)
 {
-  int pid, status;
+  int pid, pidFilho, status, fd[2];
   int code = ultimo(&numargs, args);
 
   if ((pid = fork()) < 0)
@@ -29,7 +41,42 @@ void execute(int numargs, char **args)
 
   if (pid == 0)
   {
-    redirects(numargs, args);
+    int indice = containsPipe(numargs, args);
+    if (indice == -1)
+    {
+      redirects(numargs, args);
+      execvp(*args, args);
+    }
+    if (indice > 0)
+    {
+      printf("pipe detected at index %d\n", indice);
+      printf("Remove PIPE symbol. Create Pipe. Fork(). Exec in 2 Processes\n");
+      args[indice] = NULL;
+      pipe(fd);
+      pidFilho = fork();
+      if (pidFilho == 0)
+      { // write
+        numargs = indice;
+        fprintf(stderr, "cmd write to pipe: %s numArgs=%d\n", args[0], numargs);
+        redirects(numargs, args);
+        // O output do primeiro comando, em cez de ir para o sdout, vair para o
+        dup2(fd[1], STDOUT_FILENO);
+        close(fd[0]);
+        close(fd[1]);
+      }
+      else
+      { // read
+        args = args + indice + 1;
+        numargs = numargs - indice - 1;
+        fprintf(stderr, "cmd read from pipe: %s numArgs=%d\n", args[0], numargs);
+        redirects(numargs, args);
+        dup2(fd[0], STDIN_FILENO); // duplicar o descritor de ficheiro de leitura do PIPE para a posição na tabele de FD do STDIN
+        close(fd[1]);
+        close(fd[0]); // fechar o descritor do ficheiro do pipe que este processo não necessita.
+      }
+      execvp(*args, args); // Chamar a função execvp() para executar os comandos agora ligados via um pipe.
+    }
+
     execvp(*args, args);
     perror(*args);
     exit(1);
