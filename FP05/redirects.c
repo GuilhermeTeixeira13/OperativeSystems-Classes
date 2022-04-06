@@ -49,11 +49,12 @@ int redirects(int numargs, char *args[])
   }
   else
   {
+    printf("entrou aqui");
     // verificar caso de append (>>)
     // tratar do >> open : O_WRONLY | O_APPEND
     if (strcmp(args[numargs - 2], ">>") == 0)
     {
-      int fd2 = creat(args[numargs - 1], O_WRONLY | O_APPEND);
+      int fd2 = open(args[numargs - 1], O_WRONLY | O_APPEND);
       if (fd2 < 0)
       {
         perror(NULL);
