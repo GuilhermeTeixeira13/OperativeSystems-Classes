@@ -10,6 +10,10 @@
 
 void aviso(char *mesg, int tempo);
 
+void *avisowrapper(void *args);
+
+void *socpwrapper(void *args);
+
 int parse(char *buf, char **args);
 
 void execute(int numargs, char **args);
@@ -21,6 +25,18 @@ void socp(char *fonte, char *destino);
 void ioCopy(int IN, int OUT);
 
 int redirects(int numargs, char *args[]);
+
+typedef struct
+{
+  char msg[100];
+  int tempo;
+} aviso_t;
+
+typedef struct
+{
+  char fonte[100];
+  char destino[100];
+} copiar_t;
 
 /* constantes que podem tornar uteis*/
 

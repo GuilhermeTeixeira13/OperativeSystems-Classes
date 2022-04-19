@@ -9,8 +9,8 @@
 #
 CC=cc
 FLAGS=-c -Wall
-LIBS=-lm
-OBS=main.o execute.o parse.o socp.o redirects.o
+LIBS=-lm -lpthread 
+OBS=main.o execute.o parse.o socp.o redirects.o aviso.o socpth.o
 
 #Alvo por defeito é o primeiro
 all :  soshell
@@ -21,6 +21,10 @@ execute.o : shell.h execute.c
 	$(CC) $(FLAGS) execute.c
 parse.o : shell.h parse.c
 	$(CC) $(FLAGS) parse.c
+aviso.o : shell.h aviso.c
+	$(CC) $(FLAGS) aviso.c
+socpth.o : shell.h socpth.c
+	$(CC) $(FLAGS) socpth.c
 redirects.o : shell.h redirects.c
 	$(CC) $(FLAGS) redirects.c
 soshell : $(OBS)
