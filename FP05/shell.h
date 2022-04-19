@@ -8,6 +8,8 @@
 #include <pthread.h>
 #include <ctype.h>
 
+void aviso(char *mesg, int tempo);
+
 int parse(char *buf, char **args);
 
 void execute(int numargs, char **args);
