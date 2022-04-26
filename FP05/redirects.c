@@ -49,7 +49,6 @@ int redirects(int numargs, char *args[])
   }
   else
   {
-    printf("entrou aqui");
     // verificar caso de append (>>)
     // tratar do >> open : O_WRONLY | O_APPEND
     if (strcmp(args[numargs - 2], ">>") == 0)
