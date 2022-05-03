@@ -8,6 +8,8 @@
 #include <pthread.h>
 #include <ctype.h>
 
+long int findSize(char file_name[]);
+
 void aviso(char *mesg, int tempo);
 
 void *avisowrapper(void *args);
@@ -26,7 +28,7 @@ void ioCopy(int IN, int OUT);
 
 int redirects(int numargs, char *args[]);
 
-long int findSize(char file_name[]);
+void listar (char *pasta);
 
 typedef struct
 {

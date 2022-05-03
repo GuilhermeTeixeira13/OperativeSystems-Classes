@@ -1,4 +1,5 @@
 #include "shell.h"
+#include <sys/stat.h>
 
 char prompt[100];
 
@@ -93,21 +94,42 @@ int builtin(char **args)
   }
   if (strcmp(args[0], "maior") == 0)
   {
-    long int sizef1 = filesize(args[1]);
-    long int sizef2 = filesize(args[2]);
+    long int sizef1 = findSize(args[1]);
+    long int sizef2 = findSize(args[2]);
 
     if(sizef1 < sizef2)
-      printf("%s -> %f", args[2], sizef2*0.001);
+      printf("%s -> %fKB\n", args[2], sizef2*0.001);
     else if(sizef1 > sizef2)
-      printf("%s -> %f", args[1], sizef1*0.001);
+      printf("%s -> %fKB\n", args[1], sizef1*0.001);
     else{
-      printf("%s -> %f", args[2], sizef2*0.001);
-      printf("%s -> %f", args[1], sizef1*0.001);
+      printf("%s -> %fKB\n", args[2], sizef2*0.001);
+      printf("%s -> %fKB\n", args[1], sizef1*0.001);
     }
 
     return 1;
   }
+  if (strcmp(args[0], "setx") == 0)
+  {
+    char command[50] = "chmod u=rxw ";
+    strcat(command,args[1]);
+    system(command);
 
+    return 1;
+  }
+  if (strcmp(args[0], "removerl") == 0)
+  {
+    char command[50] = "chmod go-r ";
+    strcat(command,args[1]);
+    system(command);
+
+    return 1;
+  }
+  if (strcmp(args[0], "sols") == 0)
+  {
+    listar(args[1]);
+
+    return 1;
+  }
   /* IMPORTANTE :
    Devolver 0 para indicar que não existe comando embutido e que
    será executado usando exec() na função execute.c
