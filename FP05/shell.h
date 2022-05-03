@@ -26,6 +26,8 @@ void ioCopy(int IN, int OUT);
 
 int redirects(int numargs, char *args[]);
 
+long int findSize(char file_name[]);
+
 typedef struct
 {
   char msg[100];

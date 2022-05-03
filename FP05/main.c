@@ -91,6 +91,22 @@ int builtin(char **args)
     pthread_create(&th, NULL, socpwrapper, (void *)ptr);
     return 1;
   }
+  if (strcmp(args[0], "maior") == 0)
+  {
+    long int sizef1 = filesize(args[1]);
+    long int sizef2 = filesize(args[2]);
+
+    if(sizef1 < sizef2)
+      printf("%s -> %f", args[2], sizef2*0.001);
+    else if(sizef1 > sizef2)
+      printf("%s -> %f", args[1], sizef1*0.001);
+    else{
+      printf("%s -> %f", args[2], sizef2*0.001);
+      printf("%s -> %f", args[1], sizef1*0.001);
+    }
+
+    return 1;
+  }
 
   /* IMPORTANTE :
    Devolver 0 para indicar que não existe comando embutido e que
