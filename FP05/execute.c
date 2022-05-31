@@ -49,15 +49,15 @@ void execute(int numargs, char **args)
     }
     if (indice > 0)
     {
-      printf("pipe detected at index %d\n", indice);
-      printf("Remove PIPE symbol. Create Pipe. Fork(). Exec in 2 Processes\n");
+      // printf("pipe detected at index %d\n", indice);
+      // printf("Remove PIPE symbol. Create Pipe. Fork(). Exec in 2 Processes\n");
       args[indice] = NULL;
       pipe(fd);
       pidFilho = fork();
       if (pidFilho == 0)
       { // write
         numargs = indice;
-        fprintf(stderr, "cmd write to pipe: %s numArgs=%d\n", args[0], numargs);
+        // fprintf(stderr, "cmd write to pipe: %s numArgs=%d\n", args[0], numargs);
         redirects(numargs, args);
         // O output do primeiro comando, em vez de ir para o sdout, vair para o input do segundo
         dup2(fd[1], STDOUT_FILENO);
@@ -68,7 +68,7 @@ void execute(int numargs, char **args)
       { // read
         args = args + indice + 1;
         numargs = numargs - indice - 1;
-        fprintf(stderr, "cmd read from pipe: %s numArgs=%d\n", args[0], numargs);
+        // fprintf(stderr, "cmd read from pipe: %s numArgs=%d\n", args[0], numargs);
         redirects(numargs, args);
         // O input do segundo comando, em vez de ir vir do stdin, vem do output do primeiro
         dup2(fd[0], STDIN_FILENO); // duplicar o descritor de ficheiro de leitura do PIPE para a posição na tabele de FD do STDIN

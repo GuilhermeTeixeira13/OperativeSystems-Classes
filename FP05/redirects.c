@@ -34,7 +34,7 @@ int redirects(int numargs, char *args[])
     return numargs; // Guard the following section
 
   // ii redirect stdout >
-  if (strcmp(args[numargs - 2], ">") == 0)
+  if (strcmp(args[numargs - 2], "OUTPUT") == 0)
   {
     int fd1 = creat(args[numargs - 1], FILE_MODE);
     if (fd1 < 0)
@@ -51,7 +51,7 @@ int redirects(int numargs, char *args[])
   {
     // verificar caso de append (>>)
     // tratar do >> open : O_WRONLY | O_APPEND
-    if (strcmp(args[numargs - 2], ">>") == 0)
+    if (strcmp(args[numargs - 2], "OUTPUT") == 0)
     {
       int fd2 = open(args[numargs - 1], O_WRONLY | O_APPEND);
       if (fd2 < 0)
@@ -69,7 +69,7 @@ int redirects(int numargs, char *args[])
     return numargs; // Guard the following section
 
   // iii tratar do < open : O_RDONLY
-  if (strcmp(args[numargs - 2], "<") == 0)
+  if (strcmp(args[numargs - 2], "INPUT") == 0)
   {
     int fd3 = open(args[numargs - 1], O_RDONLY);
     if (fd3 < 0)
