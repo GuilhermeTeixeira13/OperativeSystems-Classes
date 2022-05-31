@@ -12,6 +12,8 @@ void calc(char *value1, char *op, char *value2);
 
 void bits(char *op1, char *op, char *op2);
 
+int isjpeg(int fileDescriptor);
+
 long int findSize(char file_name[]);
 
 void aviso(char *mesg, int tempo);
