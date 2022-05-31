@@ -8,6 +8,10 @@
 #include <pthread.h>
 #include <ctype.h>
 
+void calc(char *value1, char *op, char *value2);
+
+void bits(char *op1, char *op, char *op2);
+
 long int findSize(char file_name[]);
 
 void aviso(char *mesg, int tempo);
@@ -20,7 +24,7 @@ int parse(char *buf, char **args);
 
 void execute(int numargs, char **args);
 
-int builtin(char **args);
+int builtin(char **args, int numargs);
 
 void socp(char *fonte, char *destino);
 
@@ -28,7 +32,7 @@ void ioCopy(int IN, int OUT);
 
 int redirects(int numargs, char *args[]);
 
-void listar (char *pasta);
+void listar(char *pasta);
 
 typedef struct
 {

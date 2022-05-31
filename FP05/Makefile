@@ -10,7 +10,7 @@
 CC=cc
 FLAGS=-c -Wall
 LIBS=-lm -lpthread 
-OBS=main.o execute.o parse.o socp.o redirects.o aviso.o socpth.o filesize.o listar.o
+OBS=main.o execute.o parse.o socp.o redirects.o aviso.o socpth.o filesize.o listar.o calc.o
 
 #Alvo por defeito é o primeiro
 all :  soshell
@@ -21,6 +21,8 @@ execute.o : shell.h execute.c
 	$(CC) $(FLAGS) execute.c
 filesize.o : shell.h filesize.c
 	$(CC) $(FLAGS) filesize.c
+calc.o : shell.h calc.c
+	$(CC) $(FLAGS) calc.c
 listar.o : shell.h listar.c
 	$(CC) $(FLAGS) listar.c
 parse.o : shell.h parse.c

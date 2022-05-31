@@ -25,13 +25,13 @@ int main()
       linha[len - 1] = '\0';
     int numargs = parse(linha, args); /* particiona a string em argumentos */
 
-    if (!builtin(args))
+    if (!builtin(args, numargs))
       execute(numargs, args); /* executa o comando */
   }
   return 0;
 }
 
-int builtin(char **args)
+int builtin(char **args, int numargs)
 {
   if (strcmp(args[0], "sair") == 0)
   {
@@ -69,6 +69,16 @@ int builtin(char **args)
       perror(args[1]);
     return 1; // comando embutido
   }
+  if (0 == strcmp(args[0], "calc") && numargs == 4)
+  {
+    calc(args[1], args[2], args[3]);
+    return 1; // comando embutido
+  }
+  if (0 == strcmp(args[0], "bits") && numargs == 4)
+  {
+    bits(args[1], args[2], args[3]);
+    return 1; // comando embutido
+  }
   if (0 == strcmp(args[0], "socp"))
   {
     socp(args[1], args[2]);
@@ -97,13 +107,14 @@ int builtin(char **args)
     long int sizef1 = findSize(args[1]);
     long int sizef2 = findSize(args[2]);
 
-    if(sizef1 < sizef2)
-      printf("%s -> %fKB\n", args[2], sizef2*0.001);
-    else if(sizef1 > sizef2)
-      printf("%s -> %fKB\n", args[1], sizef1*0.001);
-    else{
-      printf("%s -> %fKB\n", args[2], sizef2*0.001);
-      printf("%s -> %fKB\n", args[1], sizef1*0.001);
+    if (sizef1 < sizef2)
+      printf("%s -> %fKB\n", args[2], sizef2 * 0.001);
+    else if (sizef1 > sizef2)
+      printf("%s -> %fKB\n", args[1], sizef1 * 0.001);
+    else
+    {
+      printf("%s -> %fKB\n", args[2], sizef2 * 0.001);
+      printf("%s -> %fKB\n", args[1], sizef1 * 0.001);
     }
 
     return 1;
@@ -111,7 +122,7 @@ int builtin(char **args)
   if (strcmp(args[0], "setx") == 0)
   {
     char command[50] = "chmod u=rxw ";
-    strcat(command,args[1]);
+    strcat(command, args[1]);
     system(command);
 
     return 1;
@@ -119,7 +130,7 @@ int builtin(char **args)
   if (strcmp(args[0], "removerl") == 0)
   {
     char command[50] = "chmod go-r ";
-    strcat(command,args[1]);
+    strcat(command, args[1]);
     system(command);
 
     return 1;
